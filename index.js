@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var path = require('path');
 
 var products = [
 {
@@ -17,8 +18,13 @@ var currentId = 2;
 
 var PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname,));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'views')));
+
 
 app.get('/products', function(req, res) {
     res.send({ products: products });
